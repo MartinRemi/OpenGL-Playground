@@ -1,42 +1,16 @@
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
+// ----- System include(s)
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-
-bool initOpenGL( )
-{
-	//Initialize Projection Matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity( );
-	glOrtho(0.0, SCREEN_WIDTH, SCREEN_WIDTH, 0.0, 1.0, -1.0);
-
-	//Initialize Modelview Matrix
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity( );
-
-	//Initialize clear color
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-
-	//Check for error
-	GLenum error = glGetError( );
-	if(error != GL_NO_ERROR)
-	{
-		printf("Error initializing OpenGL! %s\n");
-		return false;
-	}
-
-	return true;
-}
+// ----- Project include(s)
+#include "window.h"
 
 int main( )
 {
 	// create the window
-	sf::Window window(sf::VideoMode(SCREEN_WIDTH, SCREEN_WIDTH), "OpenGL", sf::Style::Default, sf::ContextSettings(32));
-	window.setVerticalSyncEnabled(true);
+	sf::Window sf_w(sf::VideoMode(SCREEN_WIDTH, SCREEN_WIDTH), "OpenGL", sf::Style::Default, sf::ContextSettings(32));
+	sf_w.setVerticalSyncEnabled(true);
 
-	// load resources, initialize the OpenGL states, ...
-	initOpenGL( );
+	Window window(sf_w);
+	window.Init( );
 
 	// run the main loop
 	bool running = true;
@@ -44,7 +18,7 @@ int main( )
 	{
 		// handle events
 		sf::Event event;
-		while(window.pollEvent(event))
+		while(sf_w.pollEvent(event))
 		{
 			if(event.type == sf::Event::Closed)
 			{
@@ -64,7 +38,7 @@ int main( )
 		// draw...
 
 		// end the current frame (internally swaps the front and back buffers)
-		window.display( );
+		sf_w.display( );
 	}
 
 	// release resources...
