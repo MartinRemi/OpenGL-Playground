@@ -1,0 +1,12 @@
+# Visual Studio
+*.sdf
+*.sln
+*.v12suo
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.opensdf
+
+# Builds
+Debug/
+Release/
