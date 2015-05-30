@@ -5,7 +5,7 @@
 #include "Window.h"
 
 // ----- Constructor(s)
-Window::Window(const sf::Window& w):
+Window::Window(sf::Window& w):
 window(w)
 {
 }
@@ -19,6 +19,27 @@ Window::~Window( )
 bool Window::Init(void)
 {
 	return initOpenGL( );
+}
+
+void Window::Draw(void)
+{
+	// clear the buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	GLfloat vertices[] = {
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f, 0.5f, 0.0f
+	};
+
+	// Generating buffers
+	GLuint VBO;
+	glGenBuffers(1, &VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	// end the current frame (internally swaps the front and back buffers)
+	window.display( );
 }
 
 // ----- Private
