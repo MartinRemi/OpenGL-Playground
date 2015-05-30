@@ -7,6 +7,7 @@
 // ----- System include(s)
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
+#include <string>
 
 // ----- Project include(s)
 #include "utils.h"
@@ -25,7 +26,7 @@ class Window
 		 *	
 		 *	@param window The SFML window used to display content to the screen.
 		 */
-		Window(sf::Window& window);
+		Window(sf::Window &window);
 
 		/**
 		 *	@brief Window destructor.
@@ -41,6 +42,9 @@ class Window
 		 */
 		bool Init(void);
 
+		/**
+		 *	@brief Draw the content of the window each time it is called.
+		 */
 		void Draw(void);
 
 	private:
@@ -54,5 +58,13 @@ class Window
 		 *	@return true if everything went as expected.
 		 */
 		bool initOpenGL(void);
+
+		/**
+		 *	@brief Creates a shader from the content of a file given as parameter.
+		 *	@param path The path to the file containing the shader.
+		 *	@param shader Out variable containing the filled shader.
+		 *	@return true if everything went as expected.
+		 */
+		bool createShaderFromFile(const std::string &path, GLuint &shader);
 };
 

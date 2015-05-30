@@ -5,7 +5,7 @@
 #include "Window.h"
 
 // ----- Constructor(s)
-Window::Window(sf::Window& w):
+Window::Window(sf::Window &w):
 window(w)
 {
 }
@@ -35,8 +35,13 @@ void Window::Draw(void)
 	// Generating buffers
 	GLuint VBO;
 	glGenBuffers(1, &VBO);
-
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	// Shader
+	GLuint vertexShader;
+	if(createShaderFromFile("../shaders/vertexShader.glsl", vertexShader))
+		std::cout << "It works!" << std::endl;
 
 	// end the current frame (internally swaps the front and back buffers)
 	window.display( );
@@ -65,6 +70,28 @@ bool Window::initOpenGL(void)
 		return false;
 	}
 
+	return true;
+}
+
+bool Window::createShaderFromFile(const std::string &file, GLuint &shader)
+{
+	std::string shaderTxt = ReadFile(file);
+	GLchar const* fileContent = shaderTxt.c_str();
+	GLint shaderLength = shaderTxt.size();
+
+	shader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(shader, 1, &fileContent, &shaderLength);
+	glCompileShader(shader);
+	GLint success;
+	GLchar infoLog[512];
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	if(!success)
+	{
+		glGetShaderInfoLog(shader, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		return false;
+	}
+	
 	return true;
 }
 
