@@ -25,7 +25,7 @@ class Window
 		 *	
 		 *	@param window The SFML window used to display content to the screen.
 		 */
-		Window(const sf::Window& window);
+		Window(sf::Window& window);
 
 		/**
 		 *	@brief Window destructor.
@@ -41,10 +41,12 @@ class Window
 		 */
 		bool Init(void);
 
+		void Draw(void);
+
 	private:
 		// ----- Member(s)
 		/**@brief SFML Window objet used as an OpenGL context.*/
-		const sf::Window& window;
+		sf::Window& window;
 
 		// ----- Method(s)
 		/**

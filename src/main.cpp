@@ -32,13 +32,7 @@ int main( )
 			}
 		}
 
-		// clear the buffers
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// draw...
-
-		// end the current frame (internally swaps the front and back buffers)
-		sf_w.display( );
+		window.Draw( );
 	}
 
 	// release resources...
