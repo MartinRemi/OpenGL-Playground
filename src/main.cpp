@@ -11,11 +11,17 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <iostream>
+
+#include <Windows.h>
+#include <Xinput.h>
 
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 using namespace glm;
+
+#include "XBoxController.h"
 
 GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path){
 
@@ -109,6 +115,10 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 int main(void)
 {
+	XBoxController xbc;
+	if (xbc._Connect())
+		std::cout << "YAY" << std::endl;
+
 	//Set the error callback  
 	glfwSetErrorCallback(error_callback);
 
@@ -122,12 +132,6 @@ int main(void)
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
 	glDepthFunc(GL_LESS);
-
-	//Set the GLFW window creation hints - these are optional  
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //Request a specific OpenGL version  
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //Request a specific OpenGL version  
-	//glfwWindowHint(GLFW_SAMPLES, 4); //Request 4x antialiasing  
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  
 
 	//Declare a window object  
 	GLFWwindow* window;
